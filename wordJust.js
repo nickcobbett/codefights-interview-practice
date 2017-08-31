@@ -4,13 +4,14 @@ function textJustification(words, l) {
 
   var word = words[i];
   var nextWord = words[i + 1];
-  while (i < words.length) {
+  while (i < words.length) { // split up the lines.
     var k = i;
     var line = words[i];
-    while ((k < words.length - 1) && line.length + words[k + 1].length <= l) {
+    while ((k < words.length - 1) && line.length + words[k + 1].length < l) {
       line += (' ' + words[k + 1]);
       k++;
     }
+    // center justify
     var lineLen = line.length;
     var diff = l - lineLen;
     var wordsInLine = line.split(' ');
@@ -20,14 +21,14 @@ function textJustification(words, l) {
       diff--;
       if (j === wordsInLine.length - 2) {
         j = 0;
-      } else if (wordsInLine.length === 1) {
+      }
+      else if (wordsInLine.length === 1) {
         j = 0;
-      } else {
+      }
+      else {
         j++;
       }
     }
-    // var justifiedLine = '';
-    // wordsInLine.forEach(word => justifiedLine += word);
     justified.push(wordsInLine.join(' '));
 
     if (i === k) {
@@ -37,8 +38,21 @@ function textJustification(words, l) {
     }
   }
 
-  if (justified.length === 1) {
-    console.log('split', justified[0].split(','))
+  // left justify last line.
+  var line = justified[justified.length - 1].split(' ').filter(char => char !== '').join(' ');
+  // console.log(l - line.length)
+  if (line.length < l) {
+    var gap = new Array(l- line.length).fill(' ').join('')
+    // console.log('gap', gap)
+    line += gap
+    // for (var i = 0; i <= l - line.length; i++) {
+    //   console.log(i)
+    //   line += ' ';
+    // }
+
+
+    justified[justified.length - 1] = line;
+
   }
 
   return justified;
@@ -47,5 +61,17 @@ function textJustification(words, l) {
 
 var words1 = ["This", "is", "an", "example", "of", "text", "justification."];
 var twoWords = ["Two", "words."];
-// var test1 = console.log(textJustification(words1, 16))
-var test2 = console.log(textJustification(twoWords, 11));
+var words3 = ["Looks",
+ "like",
+ "it",
+ "can",
+ "be",
+ "a",
+ "tricky",
+ "test"]
+// var test1 = console.log(textJustification(words1, 16));
+
+
+// console.log(test1Actual[0].length === test1Expected[0].length)
+var test2 = console.log(textJustification(twoWords, 9));
+// var test3 = console.log(textJustification(words3, 25))
