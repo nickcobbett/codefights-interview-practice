@@ -1,10 +1,8 @@
 function zigzag(array) {
-  // for each val compare left and right vals.
-  // if right and left are less than or greater than val, push to length
+
   var maxLen = 1;
   var i = 0;
 
-  loop1:
   while (i < array.length - 1) {
     var k = i;
     var val = array[k];
@@ -14,29 +12,25 @@ function zigzag(array) {
     var flag;
     next > val ? flag = true : flag = false;
 
-    loop2:
     while (k < array.length - 1 && val !== next) {
       val = array[k];
-      next = array[k + 1]
-      // console.log(val, next)
+      next = array[k + 1];
       if ((next > val && flag) || (next < val && !flag)) {
         flag = !flag;
         len++;
         k++;
       } else {
-        break loop2;
+        break;
       }
     }
 
     if (len > maxLen) {
       maxLen = len;
     }
-    // console.log('k', k)
 
     i++;
 
   }
-  // console.log('maxLen', maxLen);
   return maxLen;
 }
 
@@ -46,14 +40,14 @@ var test3 = [4, 4];
 var test4 = [1, 2, 1];
 var test5 = [1, 2, 2];
 var test6 = [1, 2];
-var test7 = [0, 1, 0, 0, 0, 0, 1, 0, 0];
+var test7 = [1];
 console.log('test1', zigzag(test1) === 4);
 console.log('test2', zigzag(test2) === 6);
 console.log('test3' , zigzag(test3) === 1);
 console.log('test4' , zigzag(test4) === 3);
 console.log('test5' , zigzag(test5) === 2);
 console.log('test6' , zigzag(test6) === 2);
-// console.log(zigzag(test7))
+console.log('test7', zigzag(test7) === 1);
 
 
 
