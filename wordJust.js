@@ -12,8 +12,7 @@ function textJustification(words, l) {
       k++;
     }
     // center justify
-    var lineLen = line.length;
-    var diff = l - lineLen;
+    var diff = l - line.length;
     var wordsInLine = line.split(' ');
     var j = 0;
     while (diff > 0) {
@@ -40,19 +39,11 @@ function textJustification(words, l) {
 
   // left justify last line.
   var line = justified[justified.length - 1].split(' ').filter(char => char !== '').join(' ');
-  // console.log(l - line.length)
+
   if (line.length < l) {
-    var gap = new Array(l- line.length).fill(' ').join('')
-    // console.log('gap', gap)
-    line += gap
-    // for (var i = 0; i <= l - line.length; i++) {
-    //   console.log(i)
-    //   line += ' ';
-    // }
-
-
+    var gap = new Array(l- line.length).fill(' ').join('');
+    line += gap;
     justified[justified.length - 1] = line;
-
   }
 
   return justified;
