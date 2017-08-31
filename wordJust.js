@@ -7,13 +7,28 @@ function textJustification(words, l) {
   while (i < words.length) {
     var k = i;
     var line = words[i];
-    // console.log(line.length + words[k + 1].length)
     while ((k < words.length - 1) && line.length + words[k + 1].length <= l) {
-      // console.log(k)
       line += (' ' + words[k + 1]);
       k++;
     }
-    justified.push(line);
+    var lineLen = line.length;
+    var diff = l - lineLen;
+    var wordsInLine = line.split(' ');
+    var j = 0;
+    while (diff > 0) {
+      wordsInLine[j] += ' ';
+      diff--;
+      if (j === wordsInLine.length - 2) {
+        j = 0;
+      } else if (wordsInLine.length === 1) {
+        j = 0;
+      } else {
+        j++;
+      }
+    }
+    // var justifiedLine = '';
+    // wordsInLine.forEach(word => justifiedLine += word);
+    justified.push(wordsInLine.join(' '));
 
     if (i === k) {
       i++;
@@ -21,9 +36,16 @@ function textJustification(words, l) {
       i = k + 1;
     }
   }
+
+  if (justified.length === 1) {
+    console.log('split', justified[0].split(','))
+  }
+
   return justified;
 }
 
 
 var words1 = ["This", "is", "an", "example", "of", "text", "justification."];
-var test1 = console.log(textJustification(words1, 16))
+var twoWords = ["Two", "words."];
+// var test1 = console.log(textJustification(words1, 16))
+var test2 = console.log(textJustification(twoWords, 11));
