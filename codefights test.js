@@ -5,7 +5,7 @@ function zigzag(array) {
   var i = 0;
 
   loop1:
-  while (i < array.length - 2) {
+  while (i < array.length - 1) {
     var k = i;
     var val = array[k];
     var next = array[k + 1];
@@ -28,9 +28,6 @@ function zigzag(array) {
       }
     }
 
-
-
-    // console.log('len', len)
     if (len > maxLen) {
       maxLen = len;
     }
@@ -50,11 +47,11 @@ var test4 = [1, 2, 1];
 var test5 = [1, 2, 2];
 var test6 = [1, 2];
 var test7 = [0, 1, 0, 0, 0, 0, 1, 0, 0];
-// console.log('test1', zigzag(test1) === 4);
-// console.log('test2', zigzag(test2) === 6);
-// console.log('test3' , zigzag(test3) === 1);
-// console.log('test4' , zigzag(test4) === 3);
-// console.log('test5' , zigzag(test5) === 2);
+console.log('test1', zigzag(test1) === 4);
+console.log('test2', zigzag(test2) === 6);
+console.log('test3' , zigzag(test3) === 1);
+console.log('test4' , zigzag(test4) === 3);
+console.log('test5' , zigzag(test5) === 2);
 console.log('test6' , zigzag(test6) === 2);
 // console.log(zigzag(test7))
 
