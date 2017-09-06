@@ -61,8 +61,7 @@ function buildTreeFromString(str) {
     }
     i++;
   }
-  // console.log(result)
-  return stack.peek() ? stack.peek(): result;
+  return stack.peek() ? stack.peek() : result;
 
 };
 
@@ -91,10 +90,8 @@ class Tree {
   };
 
   getBottomRow() {
-    // console.log(this.root)
-    var depths = this._setDepths(this.root);
-    // console.log(depths);
 
+    var depths = this._setDepths(this.root);
     var accum = {depth: 0, values: []}
     var lastRow = depths.reduce((prev, next) => {
       if (next.depth > prev.depth) {
