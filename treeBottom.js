@@ -29,42 +29,42 @@ class Stack {
 
 function treeBottom(str) {
 
-
   var stack = new Stack();
+  var i = 0;
+  while (i < str.length - 1) {
+    // trim whitespace
+    // if (str[i] === ' ') {
+    //   i++;
+    // }
 
-  var buildTreeFromString = (str) => {
-    var i = 0;
-    while (i < str.length - 1) {
-      // trim whitespace
-      if (str[i] === ' ') {
+    if (str[i] === '(' && str[i + 1] === ')') {
+      i += 2;
+    }
+    if (str[i] === ')') {
+      stack.pop();
+    }
+
+    if (str[i] === '(' && str[i + 1] !== ')') {
+      var val = str[i + 1];
+      // account for multiple digit numbers
+      while (str[i + 2] !== ' ') {
+        val += str[i + 2];
         i++;
       }
-
-      if (str[i] === '(' && str[i + 1] === ')') {
-        i += 2;
-      }
-      if (str[i] === ')') {
-        stack.pop();
-      }
-
-      if (str[i] === '(' && str[i + 1] !== ')') {
-        var currentNode = new Node(str[i + 1]);
-        if (!stack.isEmpty()) {
-          var parentNode = stack.peek();
-          if (parentNode.left !== null) {
-            parentNode.right = currentNode;
-          } else {
-            parentNode.left = currentNode;
-          }
+      var currentNode = new Node(val);
+      if (!stack.isEmpty()) {
+        var parentNode = stack.peek();
+        if (parentNode.left !== null) {
+          parentNode.right = currentNode;
+        } else {
+          parentNode.left = currentNode;
         }
-        stack.push(currentNode);
       }
-      i++;
+      stack.push(currentNode);
     }
+    i++;
   }
 
-  buildTreeFromString(str);
-  // console.log('tree', tree);
   return stack.peek();
 
 };
@@ -84,7 +84,7 @@ function treeBottom(str) {
 
 
 var tree1 = "(2 (7 (2 () ()) (6 (5 () ()) (11 () ()))) (5 () (9 (4 () ()) ())))";
-var tree1ExpectedOutput = [5, 11, 4];
+// var tree1ExpectedOutput = [5, 11, 4];
 var tree1Actual = treeBottom(tree1);
 console.log('tree1', tree1Actual);
 
