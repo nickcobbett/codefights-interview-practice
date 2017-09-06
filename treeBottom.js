@@ -27,21 +27,17 @@ class Stack {
 }
 
 
-function treeBottom(str) {
+function buildTreeFromString(str) {
 
   var stack = new Stack();
+  var result;
   var i = 0;
   while (i < str.length - 1) {
-    // trim whitespace
-    // if (str[i] === ' ') {
-    //   i++;
-    // }
-
     if (str[i] === '(' && str[i + 1] === ')') {
       i += 2;
     }
     if (str[i] === ')') {
-      stack.pop();
+      result = stack.pop();
     }
 
     if (str[i] === '(' && str[i + 1] !== ')') {
@@ -51,7 +47,8 @@ function treeBottom(str) {
         val += str[i + 2];
         i++;
       }
-      var currentNode = new Node(val);
+
+      var currentNode = new Node(parseInt(val));
       if (!stack.isEmpty()) {
         var parentNode = stack.peek();
         if (parentNode.left !== null) {
@@ -64,13 +61,68 @@ function treeBottom(str) {
     }
     i++;
   }
-
-  return stack.peek();
+  // console.log(result)
+  return stack.peek() ? stack.peek(): result;
 
 };
 
+class Tree {
+  constructor(node) {
+    this.root = node;
+  }
 
-//
+  _setDepths(node) {
+    var depth = 0;
+    var result = [];
+    var helper = function(node) {
+      if (node.left) {
+        depth++;
+        helper(node.left);
+      }
+      if (node.right) {
+        depth++;
+        helper(node.right)
+      }
+      result.push({depth: depth, value: node.value});
+      depth--;
+    }
+    helper(node);
+    return result;
+  };
+
+  getBottomRow() {
+    // console.log(this.root)
+    var depths = this._setDepths(this.root);
+    // console.log(depths);
+
+    var accum = {depth: 0, values: []}
+    var lastRow = depths.reduce((prev, next) => {
+      if (next.depth > prev.depth) {
+        prev.depth = next.depth;
+        prev.values = [next.value];
+      } else if (next.depth === prev.depth) {
+        prev.values.push(next.value);
+      }
+      return prev;
+    }, accum);
+    return lastRow.values;
+  }
+}
+
+
+
+function treeBottom(str) {
+  var tree = new Tree(buildTreeFromString(str));
+  // console.log('tree', tree);
+  return tree.getBottomRow();
+}
+
+var tree1 = "(2 (7 (2 () ()) (6 (5 () ()) (11 () ()))) (5 () (9 (4 () ()) ())))";
+console.log(treeBottom(tree1))
+
+var tree3 = '(1 () ())'
+console.log(treeBottom(tree3))
+
 //            2
 //          /   \
 //        /       \
@@ -83,20 +135,21 @@ function treeBottom(str) {
 //       5     11  4
 
 
-var tree1 = "(2 (7 (2 () ()) (6 (5 () ()) (11 () ()))) (5 () (9 (4 () ()) ())))";
-// var tree1ExpectedOutput = [5, 11, 4];
-var tree1Actual = treeBottom(tree1);
-console.log('tree1', tree1Actual);
+// var tree1 = "(2 (7 (2 () ()) (6 (5 () ()) (11 () ()))) (5 () (9 (4 () ()) ())))";
+// treeBottom(tree1);
+// // var tree1ExpectedOutput = [5, 11, 4];
+// var tree1Actual = treeBottom(tree1);
+// // console.log('tree1', tree1Actual);
 
-var tree2 = '(2 (1 () ()) (3 () ())';
-var tree2ExpectedOutput = [2, 3];
-var tree2Actual = treeBottom(tree2);
-// console.log('tree2', tree2Actual);
+// var tree2 = '(2 (1 () ()) (3 () ())';
+// var tree2ExpectedOutput = [2, 3];
+// var tree2Actual = treeBottom(tree2);
+// // console.log('tree2', tree2Actual);
 
-var tree3 = '(1 () ())'
-var tree3ExpectedOutput = [1];
-// var tree3Actual = treeBottom(tree3);
-// console.log('tree3', tree3Actual);
+// var tree3 = '(1 () ())'
+// var tree3ExpectedOutput = [1];
+// // var tree3Actual = treeBottom(tree3);
+// // console.log('tree3', tree3Actual);
 
 
 // tree = tree.replace(/\)|\)/g, "]");
