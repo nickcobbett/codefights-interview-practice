@@ -1,30 +1,29 @@
 function firstNotRepeatingCharacter(s) {
-  var accum = {
-    ones: [],
-    dups: []
-  }
-
-  var chars = s.split('').reduce((prev, next, i) => {
-    console.log(prev)
-    if (prev.ones.includes(next)) {
-      var dup = prev.ones.splice(prev.ones.indexOf(next), 1)[0];
-      prev.dups.push(dup);
-    } else if (!prev.dups.includes(next)) {
-      prev.ones.push(next);
+  var uniques = [];
+  var dups = {};
+  var chars = s.split('');
+  chars.forEach((char) => {
+    // is it in dups?
+      // y?
+        // is it in uniqs?
+          // y? remove from uniques
+      // n? add to uniqs
+    if (!dups[char]) {
+      uniques.push(char);
+    } else {
+      var indexOfChar = uniques.indexOf(char);
+      indexOfChar !== -1 ? uniques.splice(indexOfChar, 1) : null;
     }
-    return prev;
-  }, accum);
-
-  // console.log(chars)
-  return chars.ones[0] || '_';
-  // console.log(chars);
+    dups[char] = 1;
+  });
+  return uniques[0] || '_';
 }
 
 var s1 = "abacabad";
-// console.log(firstNotRepeatingCharacter(s1)); // 'c'
+console.log(firstNotRepeatingCharacter(s1)); // 'c'
 
 var s2 = "abacabaabacaba";
-// console.log(firstNotRepeatingCharacter(s2)); // '_'
+console.log(firstNotRepeatingCharacter(s2)); // '_'
 
 var s3 = "bcccccccb";
 console.log(firstNotRepeatingCharacter(s3)); // '_'
