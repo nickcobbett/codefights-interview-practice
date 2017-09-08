@@ -1,4 +1,5 @@
-var grid1 = [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
+var grid1 =
+       [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
         ['.', '.', '6', '.', '.', '.', '.', '.', '.'],
         ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
         ['.', '.', '1', '.', '.', '.', '.', '.', '.'],
@@ -49,7 +50,17 @@ function sudoku2(grid) {
     // create regions
   var rows = [];
   var cols = [];
-  var regions = [];
+  var regions = { // key: tl = topLeft, mm = middleMiddle, br = bottomRight
+    tl: [],
+    tm: [],
+    tr: [],
+    ml: [],
+    mm: [],
+    mr: [],
+    bl: [],
+    bm: [],
+    br: []
+  };
 
   for (var i = 0; i < grid.length; i++) {
     var row = grid[i];
@@ -61,7 +72,7 @@ function sudoku2(grid) {
       }
       var num = parseInt(row[j]);
       // check if rows[i] has a value for num and ignore periods
-      if (num !== NaN) {
+      if (!isNaN(num)) {
         if (rows[i][num]) {
           return false;
         } else {
@@ -73,12 +84,81 @@ function sudoku2(grid) {
         } else {
           cols[j][num] = num;
         }
-        //
+        // check regions
+        if (i >= 0 && i <= 2) { // top regions
+          if (j >= 0 && j <= 2) { // tl
+            if (regions.tl.includes(num)) {
+              return false;
+            } else {
+              regions.tl.push(num);
+            }
+          }
+          if (j >= 3 && j <= 5) { // tm
+            if (regions.tm.includes(num)) {
+              return false;
+            } else {
+              regions.tm.push(num);
+            }
+          }
+          if (j >= 6 && j <= 8) { // tr
+            if (regions.tr.includes(num)) {
+              return false;
+            } else {
+              regions.tr.push(num);
+            }
+          }
+        }
+        if (i >= 3 && i <= 5) { // middle regions
+          if (j >= 0 && j <= 2) { // ml
+            if (regions.ml.includes(num)) {
+              return false;
+            } else {
+              regions.ml.push(num);
+            }
+          }
+          if (j >= 3 && j <= 5) { // mm
+            if (regions.mm.includes(num)) {
+              return false;
+            } else {
+              regions.mm.push(num);
+            }
+          }
+          if (j >= 6 && j <= 8) { // mr
+            if (regions.mr.includes(num)) {
+              return false;
+            } else {
+              regions.mr.push(num);
+            }
+          }
+        }
+        if (i >= 6 && i <= 8) { // bottom regions
+          if (j >= 0 && j <= 2) { // bl
+            if (regions.bl.includes(num)) {
+              return false;
+            } else {
+              regions.tl.push(num);
+            }
+          }
+          if (j >= 3 && j <= 5) { // bm
+            if (regions.bm.includes(num)) {
+              return false;
+            } else {
+              regions.bm.push(num);
+            }
+          }
+          if (j >= 6 && j <= 8) { // br
+            if (regions.br.includes(num)) {
+              return false;
+            } else {
+              regions.br.push(num);
+            }
+          }
+        }
       }
 
     }
   }
-  // console.log(rows)
+
   return true;
 }
 
