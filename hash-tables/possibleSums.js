@@ -2,57 +2,50 @@ function possibleSums(coins, quantity) {
   var combos = {};
   var sums = {};
   var count = 0;
-  // loop through coins
-  // for each coin, for each quantity of coin add to sums and to each sum in there
-  //increase count.
 
   coins.forEach((coin, i) => {
-    var coinString = coin.toString();
+    var coinStr = coin.toString();
 
-    if (!combos[coinString]) {
-      combos[coinString] = eval(coin);
+    if (!combos[coinStr]) {
+      combos[coinStr] = eval(coin);
     }
 
-    if (!sums[coinString]) {
-      sums[coinString] = eval(coin);
+    if (!sums[coinStr]) {
       count++;
+      sums[coinStr] = eval(coin);
     }
 
     for (var q = 1; q <= quantity[i]; q++) {
       for (var key in combos) {
-        var sum = eval(combos[key]) + eval(coinString);
-        var combo = `${key}+${coinString}`;
-        if (key !== coin.toString()) {
-          // && !sums[sum.toString()] && !combos[combo]
-          if (!combos[combo]) {
-            combos[combo] = eval(combo);
-          }
-          if (!sums[eval(combo)]) {
-            sums[eval(combo)] = sum;
+        var combo = `${key}+${coinStr}`;
+        var sum = eval(combo);
+        if (key !== coinStr || q > 1) { // && !combos[combo] && !sums[sum]
+          // console.log(key, coinStr)
+          if (!combos[combo] && !sums[sum.toString()]) {
+            combos[combo] = sum;
+            sums[sum.toString()] = sum;
             count++;
           }
         }
       }
-      console.log('coinstr', coinString)
-      coinString+= `+${coin.toString()}`;
     }
 
   });
 
-  console.log('sums', sums);
-  console.log('combos', combos);
+  // console.log('sums', sums);
+  // console.log('combos', combos);
   return count;
 }
 
 var coins = [10, 50, 100];
 var quantity = [1, 2, 1];
-console.log('test1: ', possibleSums(coins, quantity)); // 9
+// console.log('test1: ', possibleSums(coins, quantity)); // 9
 
 
 
 coins = [10, 50, 100, 500]
 quantity = [5, 3, 2, 2]
-// console.log('test2: ', possibleSums(coins, quantity)); // 122
+console.log('test2: ', possibleSums(coins, quantity)); // 122
 
 
 coins = [1, 2]
