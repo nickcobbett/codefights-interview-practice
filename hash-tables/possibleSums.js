@@ -1,53 +1,47 @@
 function possibleSums(coins, quantity) {
-  var quantityHash = {};
+  var combos = {};
   var sums = {};
   var count = 0;
+  // loop through coins
+  // for each coin, for each quantity of coin add to sums and to each sum in there
+  //increase count.
 
-  for (var i = 0; i < coins.length; i++) {
-    var key = quantity[i].toString();
-    var value = coins[i];
-    if (!quantityHash[key]) {
-      quantityHash[key] = [];
+  coins.forEach((coin, i) => {
+    var coinString = coin.toString();
+
+    if (!combos[coinString]) {
+      combos[coinString] = eval(coin);
     }
-    // if (!sums[value]) {
-    //   sums[value.toString()] = value;
-    // }
-    quantityHash[key].push(value);
-  }
-  console.log('quantityHash: ', quantityHash);
-  // build sums
-  for (var key in quantityHash) {
-    var quantity = parseInt(key); //
-    var coins = quantityHash[key];
-    var i = 1; // while i <= quant
-    while (i <= quantity) {
-      coins.forEach(coin => {
-        console.log('coin', coin )
-        var sumKey = coin.toString();
 
-        // if coin doesnt exist in sums then add it
-        if (!sums[sumKey]) {
-          sums[sumKey] = coin;
-          count++;
-        }
-        // then loop through all sums and each coin to coin and add to sums if doesnt exist
-        for (var key in sums) {
-          if (key !== sumKey) {
-            var sum = sums[key] + coin;
-            var sumStr = sum.toString();
-            if (!sums[sumStr]) {
-              sums[sumStr] = sum;
-              count++;
-            }
+    if (!sums[coinString]) {
+      sums[coinString] = eval(coin);
+      count++;
+    }
+
+    for (var q = 1; q <= quantity[i]; q++) {
+      for (var key in combos) {
+        var sum = eval(combos[key]) + eval(coinString);
+        var combo = `${key}+${coinString}`;
+        if (key !== coin.toString()) {
+          // && !sums[sum.toString()] && !combos[combo]
+          if (!combos[combo]) {
+            combos[combo] = eval(combo);
+          }
+          if (!sums[eval(combo)]) {
+            sums[eval(combo)] = sum;
+            count++;
           }
         }
-      })
-      i++;
+      }
+      console.log('coinstr', coinString)
+      coinString+= `+${coin.toString()}`;
     }
-  }
 
-  console.log('sums', sums)
-  return count
+  });
+
+  console.log('sums', sums);
+  console.log('combos', combos);
+  return count;
 }
 
 var coins = [10, 50, 100];
