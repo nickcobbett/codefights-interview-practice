@@ -26,17 +26,30 @@ function swapLexOrder(str, pairs) {
         swaps[str] = 1;
       }
     })
-
   }
 
-  console.log('swaps', swaps);
+  // console.log('swaps', swaps);
+  console.log('maxStr', maxStr);
   return maxStr;
 }
 
 
 var str = "abdc";
 var pairs = [[1,4], [3,4]];
-// console.log('test1: ', swapLexOrder(str, pairs)); // 'dbca'
+console.log('test1: ', swapLexOrder(str, pairs) === 'dbca'); // 'dbca'
 str = "acxrabdz"
 pairs = [[1,3], [6,8], [3,8], [2,7]];
-console.log('test3: ', swapLexOrder(str, pairs)); // 'zdxrabca'
+console.log('test3: ', swapLexOrder(str, pairs) === 'zdxrabca'); // 'zdxrabca'
+
+str = "fixmfbhyutghwbyezkveyameoamqoi";
+pairs = [[8,5],
+ [10,8],
+ [4,18],
+ [20,12],
+ [5,2],
+ [17,2],
+ [13,25],
+ [29,12],
+ [22,2],
+ [17,11]];
+console.log('test6: ', swapLexOrder(str, pairs) === 'fzxmybhtuigowbyefkvhyameoamqei'); // 'fzxmybhtuigowbyefkvhyameoamqei'
