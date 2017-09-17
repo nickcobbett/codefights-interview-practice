@@ -5,33 +5,40 @@ function swapLexOrder(str, pairs) {
   var swaps = {};
   swaps[str] = 1;
 
+  const replaceAt = (str, index, replacement) => {
+    return str.substr(0, index) + replacement + str.substr(index + replacement.length);
+  }
+
   const swapLtrs = (str, pair) => {
-    str = str.split('');
+
+    var str = str;
     var a = pair[0] - 1;
     var b = pair[1] - 1;
     var temp = str[a];
-    str[a] = str[b];
-    str[b] = temp;
-    return str.join('');
-  }
+
+    str = replaceAt(str, a, str[b]);
+    str = replaceAt(str, b, temp);
+
+    return str;
+  };
 
   var keepSearching = true;
-  while (keepSearching) {
-    keepSearching = false;
+  while (keepSearching && pairs.length) {
     pairs.forEach(pair => {
       for (var key in swaps) {
+        keepSearching = false;
         str = swapLtrs(key, pair);
         if (str > maxStr) maxStr = str;
         if (!swaps[str]) keepSearching = true;
         swaps[str] = 1;
       }
-    })
+    });
   }
 
   // console.log('swaps', swaps);
   console.log('maxStr', maxStr);
   return maxStr;
-}
+};
 
 
 var str = "abdc";
@@ -40,7 +47,9 @@ console.log('test1: ', swapLexOrder(str, pairs) === 'dbca'); // 'dbca'
 str = "acxrabdz"
 pairs = [[1,3], [6,8], [3,8], [2,7]];
 console.log('test3: ', swapLexOrder(str, pairs) === 'zdxrabca'); // 'zdxrabca'
-
+str = "z"
+pairs = [];
+console.log('test4: ', swapLexOrder(str, pairs) === 'z'); // 'z'
 str = "fixmfbhyutghwbyezkveyameoamqoi";
 pairs = [[8,5],
  [10,8],
