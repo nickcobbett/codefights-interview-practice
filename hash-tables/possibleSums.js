@@ -2,9 +2,10 @@ function possibleSums(coins, quantity) {
   var combos = {};
   var sums = {};
   var count = 0;
+  var key = 0;
 
   coins.forEach((coin, i) => {
-    var key1 = coin.toString();
+    var key1 = key.toString();
     combos[key1] = [];
     for (var q = 1; q <= quantity[i]; q++) {
       combos[key1].push(coin*q)
@@ -28,6 +29,7 @@ function possibleSums(coins, quantity) {
         })
       }
     })
+    key++;
   });
 
   // console.log('combos', combos);
@@ -49,4 +51,7 @@ quantity = [2, 3];
 console.log('test4: ', possibleSums(coins, quantity)); // 5
 coins = [1, 2];
 quantity = [50000, 2];
-// console.log('test5: ', possibleSums(coins, quantity)); // 50004
+console.log('test5: ', possibleSums(coins, quantity)); // 50004
+coins = [3, 1, 1]
+quantity = [111, 84, 104]
+console.log('test7', possibleSums(coins, quantity)); // 521
