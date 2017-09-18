@@ -43,13 +43,13 @@ function swapLexOrder(str, pairs) {
 
 var str = "abdc";
 var pairs = [[1,4], [3,4]];
-console.log('test1: ', swapLexOrder(str, pairs) === 'dbca'); // 'dbca'
+// console.log('test1: ', swapLexOrder(str, pairs) === 'dbca');
 str = "acxrabdz"
 pairs = [[1,3], [6,8], [3,8], [2,7]];
-console.log('test3: ', swapLexOrder(str, pairs) === 'zdxrabca'); // 'zdxrabca'
+// console.log('test3: ', swapLexOrder(str, pairs) === 'zdxrabca');
 str = "z"
 pairs = [];
-console.log('test4: ', swapLexOrder(str, pairs) === 'z'); // 'z'
+// console.log('test4: ', swapLexOrder(str, pairs) === 'z');
 str = "fixmfbhyutghwbyezkveyameoamqoi";
 pairs = [[8,5],
  [10,8],
@@ -61,4 +61,25 @@ pairs = [[8,5],
  [29,12],
  [22,2],
  [17,11]];
-console.log('test6: ', swapLexOrder(str, pairs) === 'fzxmybhtuigowbyefkvhyameoamqei'); // 'fzxmybhtuigowbyefkvhyameoamqei'
+// console.log('test6: ', swapLexOrder(str, pairs) === 'fzxmybhtuigowbyefkvhyameoamqei');
+
+str = "lvvyfrbhgiyexoirhunnuejzhesylojwbyatfkrv";
+pairs = [[13,23],
+ [13,28],
+ [15,20],
+ [24,29],
+ [6,7],
+ [3,4],
+ [21,30],
+ [2,13],
+ [12,15],
+ [19,23],
+ [10,19],
+ [13,14],
+ [6,16],
+ [17,25],
+ [6,21],
+ [17,26],
+ [5,6],
+ [12,24]];
+console.log('test7: ', swapLexOrder(str, pairs) === 'lvvyfrbhgiyexoirhunnuejzhesylojwbyatfkrv');
