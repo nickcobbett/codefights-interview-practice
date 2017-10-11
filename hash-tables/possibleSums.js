@@ -39,13 +39,13 @@ function possibleSums(coins, quantity) {
 
 var coins = [10, 50, 100];
 var quantity = [1, 2, 1];
-// console.log('test1: ', possibleSums(coins, quantity)); // 9
+console.log('test1: ', possibleSums(coins, quantity)); // 9
 coins = [10, 50, 100, 500];
 quantity = [5, 3, 2, 2];
-// console.log('test2: ', possibleSums(coins, quantity)); // 122
+console.log('test2: ', possibleSums(coins, quantity)); // 122
 coins = [1];
 quantity = [5];
-// console.log('test3: ', possibleSums(coins, quantity)); // 5
+console.log('test3: ', possibleSums(coins, quantity)); // 5
 coins = [1, 1];
 quantity = [2, 3];
 console.log('test4: ', possibleSums(coins, quantity)); // 5

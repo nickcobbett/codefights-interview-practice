@@ -1,9 +1,20 @@
+function isNotEmptyObject(obj) {
+  for(var prop in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function swapLexOrder(str, pairs) {
   // while swap is still yielding new results go through all the pairs
   // swap letters and add to swaps and compare to maxStr
-  var maxStr = str;
+  var maxStr = '';
   var swaps = {};
-  swaps[str] = 1;
+  swaps[str] = [...pairs];
+  var todos = [];
+  todos.push(str);
 
   const replaceAt = (str, index, replacement) => {
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);
@@ -22,28 +33,54 @@ function swapLexOrder(str, pairs) {
     return str;
   };
 
-  var keepSearching = true;
-  while (keepSearching && pairs.length) {
-    pairs.forEach(pair => {
-      for (var key in swaps) {
-        keepSearching = false;
-        str = swapLtrs(key, pair);
-        if (str > maxStr) maxStr = str;
-        if (!swaps[str]) keepSearching = true;
-        swaps[str] = 1;
-      }
-    });
+  while (todos.length) {
+    todos.forEach((todo, i) => {
+      swaps[todo].forEach((pair, k) => {
+        console.log(swaps)
+        var swap = swapLtrs(todo, pair);
+        // console.log(todo, swap)
+        // console.log('swaps', swaps)
+        if (swap > maxStr) maxStr = swap;
+        if (!swaps[swap]) {
+          var pairsToDo = [...pairs];
+          pairsToDo.splice(pairsToDo.indexOf(pair), 1);
+          swaps[swap] = pairsToDo;
+        } else {
+          swaps[swap].splice(swaps[swap].indexOf(pair), 1);
+        }
+
+        if (swaps[swap].length) {
+          todos.push(swap);
+        } else {
+          todos.splice(todos.indexOf(swap), 1);
+        }
+      });
+      todos.splice(todos.indexOf(todo), 1);
+      swaps[todo] = [];
+    })
   }
 
+  // for all of todos make all its swaps
+  // abdc -> 1-4, 3-4,
+  // add to swaps
+    // swaps[abdc] = [] (empty)
+    // swaps[cbda] = [3,4] splice out 1,4 since its had that done. needs to have 3,4 done
+    // swaps[abcd] = [1,4] splice out 3,4 '' '' '' needs 1,4 done
+  // since theyre not full they get added to a todo cache
+    // todos[cbda] = 1, [abcd] = 1
+    // while todos has props
+    // for each todo
+
+
   // console.log('swaps', swaps);
-  console.log('maxStr', maxStr);
+  // console.log('maxStr', maxStr);
   return maxStr;
 };
 
 
 var str = "abdc";
 var pairs = [[1,4], [3,4]];
-// console.log('test1: ', swapLexOrder(str, pairs) === 'dbca');
+console.log('test1: ', swapLexOrder(str, pairs) === 'dbca');
 str = "acxrabdz"
 pairs = [[1,3], [6,8], [3,8], [2,7]];
 // console.log('test3: ', swapLexOrder(str, pairs) === 'zdxrabca');
@@ -82,4 +119,4 @@ pairs = [[13,23],
  [17,26],
  [5,6],
  [12,24]];
-console.log('test7: ', swapLexOrder(str, pairs) === 'lvvyfrbhgiyexoirhunnuejzhesylojwbyatfkrv');
+// console.log('test7: ', swapLexOrder(str, pairs) === 'lyyvurrhgxyzvonohunlfejihesiebjwbyatfkrv');
