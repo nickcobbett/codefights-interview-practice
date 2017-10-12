@@ -1,52 +1,19 @@
-//
-// Definition for binary tree:
-// function Tree(x) {
-//   this.value = x;
-//   this.left = null;
-//   this.right = null;
-// }
-
-class Queue {
-  constructor(val) {
-    this.storage = [val];
-  }
-
-  pop() {
-    return this.storage.pop();
-  }
-
-  push(val) {
-    this.storage.unshift(val)
-  }
-
-  isEmpty() {
-    return this.storage.length === 0;
-  }
-
-  forEach(cb) {
-    this.storage.forEach((val, i, arr) => {
-      cb(val, i, arr);
-    })
-  }
-}
-
 function largestValuesInTreeRows(t) {
   if (!t) return [];
 
   var queue = [[t]];
-
-  var levels = [];
+  var maxes = [];
   var level = 0;
+
   while (queue.length) {
     var nodes = queue.pop();
     var children = [];
-
-    if (!levels[level]) {
-      levels[level] = [];
-    }
+    maxes[level] = -Infinity;
 
     nodes.forEach(node => {
-      levels[level].push(node.value);
+      if (node.value > maxes[level]) {
+        maxes[level] = node.value;
+      }
       if (node.left) {
         children.push(node.left);
       }
@@ -55,15 +22,14 @@ function largestValuesInTreeRows(t) {
       }
     });
 
-    if (children.length) queue.unshift(children);
+    if (children.length) {
+      queue.push(children);
+    }
 
     level++;
 
   }
-  console.log(levels)
-  var filtered = levels.filter(level => level.length).map(arr => Math.max(...arr));
-  return filtered;
-
+  return maxes;
 }
 
 var t =  {
@@ -147,4 +113,40 @@ t = {
     }
 }
 
-console.log('test5', largestValuesInTreeRows(t)); // [-1, 7, 1, 10]
+// console.log('test5', largestValuesInTreeRows(t)); // [-1, 7, 1, 10]
+
+t = {
+  value: 1,
+  left: {
+    value: 2,
+    left: {
+      value: 4,
+      left: null,
+      right: null
+    },
+    right: {
+      value: 5,
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    value: 3,
+    left: {
+      value: 6,
+      left: null,
+      right: null
+    },
+    right: {
+      value: 7,
+      left: null,
+      right: null
+    }
+  }
+}
+
+console.log('test17', largestValuesInTreeRows(t)); // [1, 3, 7]
+
+t = null
+
+// console.log('test empty t', largestValuesInTreeRows(t)); // [1, 3, 7]
