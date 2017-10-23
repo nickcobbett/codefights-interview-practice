@@ -8,32 +8,30 @@ function Tree(x) {
 
 
 const restoreBinaryTree = (inorder, preorder) => {
-  var tree = new Tree();
+  var tree = new Tree(preorder[0]);
 
-  const helper = (inorder, preorder, tree) => {
-    // console.log('##', tree)
-    var leftInorder = inorder.slice(0, inorder.indexOf(preorder[0]));
-    var rightInorder = inorder.slice(inorder.indexOf(preorder[0]) + 1);
-    // console.log(leftInorder);
-    // console.log(rightInorder);
-    var leftPreorder = preorder.slice(1, leftInorder.length + 1);
-    var rightPreorder = preorder.slice(leftInorder.length + 1);
+  var leftInorder = inorder.slice(0, inorder.indexOf(preorder[0]));
+  var rightInorder = inorder.slice(inorder.indexOf(preorder[0]) + 1);
+  var leftPreorder = preorder.slice(1, leftInorder.length + 1);
+  var rightPreorder = preorder.slice(leftInorder.length + 1);
 
-    tree.value = preorder[0];
-    if (leftInorder.length) {
-      tree.left = new Tree();
-      helper(leftInorder, leftPreorder, tree.left);
-    }
-    if (rightInorder.length) {
-      tree.right = new Tree();
-      helper(rightInorder, rightPreorder, tree.right);
-    }
+  if (leftInorder.length) {
+    tree.left = restoreBinaryTree(leftInorder, leftPreorder);
+  }
+  if (rightInorder.length) {
+    tree.right = restoreBinaryTree(rightInorder, rightPreorder);
   }
 
-  helper(inorder, preorder, tree);
   return tree;
-
 };
+
+
+
+
+
+
+
+
 
 var inorder = [4, 2, 1, 5, 3, 6];
 var preorder = [1, 2, 4, 3, 5, 6];
